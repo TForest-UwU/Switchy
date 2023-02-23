@@ -5,9 +5,6 @@ import pygatt
 import os
 import re
 
-
-os.system('color')
-
 class Bot(object):
     """Switchbot class to control the bot."""
 
@@ -24,7 +21,7 @@ class Bot(object):
         self.device = None
         self.password = None
         self.notification_activated = False
-        print(colored(f"Successfully created {self.name} at {self.mac} with Id {self.bot_id}", "green"))
+        print(colored("Succesfully connected to ", "green" + f"{self.name}", "on_cyan" + " at ", "green" + f"{self.mac}", "on_cyan" + " with id ", "green" + f"{self.bot_id}", "on_cyan"))
 
     def connect(self):
         con = pexpect.spawn('gatttool -b ' + self.mac + ' -t random -I')

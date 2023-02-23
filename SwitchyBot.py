@@ -11,7 +11,7 @@ class Bot(object):
     def __init__(self, bot_id: int, mac: str, name: str):
 
         if not re.match(r"[0-9A-F]{2}(?:[-:][0-9A-F]{2}){5}$", mac):
-            raise cprint(f"Illegal Mac Address: {mac}", "red")
+            raise ValueError(f"Illegal Mac Address: ", mac)
 
         self.bot_id = bot_id
         self.mac = mac
@@ -21,11 +21,11 @@ class Bot(object):
         self.device = None
         self.password = None
         self.notification_activated = False
-        cprint(f"Succesfully created {self.name} at {self.mac} with id {self.bot_id}", "green")
+        cprint(f"Succesfully created {self.name} at {self.mac} with id {self.bot_id}", "cyan")
 
     def connect(self):
         con = pexpect.spawn('gatttool -b ' + self.mac + ' -t random -I')
-        print('Preparing to connect.')
+        print('Preparing to connect')
         retry = 3
         index = 0
         while retry > 0 and 0 == index:
@@ -34,6 +34,17 @@ class Bot(object):
                 ['Error', '\[CON\]', 'Connection successful.*\[LE\]>'])
             retry -= 1
             if 0 == index:
-                print('Connection error')
+                cprint("Connection error", "red")
                 return
-            print(f"Connected to {self.name} at {self.mac}")
+            cprint(f"Connected to {self.name} at {self.mac}", "cyan")
+
+    def press(self):
+        cmd = b'\x57\x01'
+        value = self.write(handle=0x16, cmd=cmd)
+
+    def write(self, handle, cmd):
+        try:
+            self.device.char_write_handle(handle = handle, value = cmd)
+
+        except pygatt.BLEError:
+            raise ConnectionRefusedError(f"Failed to connect to {self.name} at {self.mac}")

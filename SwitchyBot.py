@@ -75,6 +75,11 @@ class Bot(object):
         except pygatt.BLEError:
             raise ConnectionError(f"Failed to connect to {self.name} at {self.mac}")
 
+
+    def handle_notify(handle: int, value: bytes):
+        handle_queue.put((handle, value))
+
+
     def notify(self):
         uuid = "cba20003-224d-11e6-9fb8-0002a5d5c51b"
         try:
@@ -82,10 +87,6 @@ class Bot(object):
             self.notification_activated = True
         except pygatt.BLEError:
             raise ConnectionError("Failed to activate notification")
-
-
-    def handle_notify(handle: int, value: bytes):
-        handle_queue.put((handle, value))
 
 
     def write(self, handle, cmd, timeout = 5):
@@ -96,7 +97,7 @@ class Bot(object):
             cprint(f"Succesfully sent {cmd} to {self.name} using handle {handle}")
  
         except pygatt.BLEError:
-            raise ConnectionError(f"Failed to sent {cmd} to {self.name} at {self.mac}")
+            raise ConnectionError(f"Failed to send {cmd} to {self.name} at {self.mac}")
 
     
     def _handle_switchbot_status_msg(self, value: bytearray):

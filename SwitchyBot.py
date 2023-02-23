@@ -18,7 +18,7 @@ class Bot(object):
         self.device = None
         self.password = None
         self.notification_activated = False
-        print(f"Successfully created {self.name} at {self.mac} with ID {self.bot_id}")
+        print(f"Successfully created {self.name} at {self.mac} with Id {self.bot_id}")
 
     def trigger(device):
         [mac, dev_type, act] = device
@@ -37,3 +37,7 @@ class Bot(object):
             index = con.expect(
                 ['Error', '\[CON\]', 'Connection successful.*\[LE\]>'])
             retry -= 1
+            if 0 == index:
+                print('Connection error')
+                return
+            print(f"Connected to {self.name} at {self.mac}")

@@ -51,12 +51,14 @@ class Bot(object):
     def _connect(self):
         try:
             self.device = self.adapter.connect(self.mac, address_type=pygatt.BLEAddressType.random)
+            cprint(f"Succesfully reconnected to {self.name} at {self.mac}", "cyan")
         except pygatt.BLEError:
             raise ConnectionRefusedError(f"Failed to connect to {self.name} at {self.mac}")
 
     def write(self, handle, cmd):
         try:
             self.device.char_write_handle(handle = handle, value = cmd)
+            cprint(f"Succesfully send {cmd} to {self.name} using handle {handle}")
  
         except pygatt.BLEError:
             raise ConnectionRefusedError(f"Failed to write {cmd} to {self.name} at {self.mac}")

@@ -1,4 +1,4 @@
-from termcolor import colored, cprint
+from termcolor import cprint
 
 import pexpect
 import pygatt
@@ -11,7 +11,7 @@ class Bot(object):
     def __init__(self, bot_id: int, mac: str, name: str):
 
         if not re.match(r"[0-9A-F]{2}(?:[-:][0-9A-F]{2}){5}$", mac):
-            raise ValueError("Illegal Mac Address: ", mac)
+            raise cprint(f"Illegal Mac Address: {mac}", "red")
 
         self.bot_id = bot_id
         self.mac = mac
@@ -21,8 +21,7 @@ class Bot(object):
         self.device = None
         self.password = None
         self.notification_activated = False
-        cprint("Succesfully connected to ", "green")
-        cprint(f"{self.name}", "on_cyan")
+        cprint(f"Succesfully created {self.name} at {self.mac} with id {self.bot_id}", "green")
 
     def connect(self):
         con = pexpect.spawn('gatttool -b ' + self.mac + ' -t random -I')

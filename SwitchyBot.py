@@ -1,3 +1,4 @@
+import pexpect
 import pygatt
 import re
 
@@ -17,3 +18,10 @@ class Bot(object):
         self.device = None
         self.password = None
         self.notification_activated = False
+
+    def trigger(device):
+        [mac, dev_type, act] = device
+        raise ValueError("Mac: ", mac)
+        con = pexpect.spawn('gatttool -b ' + mac + ' -t random -I')
+        con.expect('\[LE\]>')
+        print('Preparing to connect.')

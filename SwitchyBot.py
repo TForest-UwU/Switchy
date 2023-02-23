@@ -2,7 +2,6 @@ from termcolor import cprint
 
 import pexpect
 import pygatt
-import os
 import re
 
 class Bot(object):
@@ -39,12 +38,25 @@ class Bot(object):
             cprint(f"Connected to {self.name} at {self.mac}", "cyan")
 
     def press(self):
-        cmd = b'\x57\x01'
-        value = self.write(handle=0x16, cmd=cmd)
+        try:
+            self.adapter.start()
+            self._connect()
+
+            cmd = b'\x57\x01'
+            value = self.write(handle=0x16, cmd=cmd)
+
+        finally:
+            self.adapter.stop()
+
+    def _connect(self):
+        try:
+            self.device = self.adapter.connect(self.mac, address_type=pygatt.BLEAddressType.random)
+        except pygatt.BLEError:
+            raise ConnectionRefusedError(f"Failed to connect to {self.name} at {self.mac}")
 
     def write(self, handle, cmd):
         try:
             self.device.char_write_handle(handle = handle, value = cmd)
-
+ 
         except pygatt.BLEError:
-            raise ConnectionRefusedError(f"Failed to connect to {self.name} at {self.mac}")
+            raise ConnectionRefusedError(f"Failed to write {cmd} to {self.name} at {self.mac}")

@@ -18,6 +18,7 @@ class Bot(object):
         self.device = None
         self.password = None
         self.notification_activated = False
+        raise print(f"Successfully created {self.name} at {self.mac} with ID {self.bot_id}")
 
     def trigger(device):
         [mac, dev_type, act] = device
@@ -28,5 +29,11 @@ class Bot(object):
 
     def press(self):
         con = pexpect.spawn('gatttool -b ' + self.mac + ' -t random -I')
-        index = con.expect(
-            ['Error', '\[CON\]', 'Connection successful.*\[LE\]>'])
+        print('Preparing to connect.')
+        retry = 3
+        index = 0
+        while retry > 0 and 0 == index:
+            con.sendline('connect')
+            index = con.expect(
+                ['Error', '\[CON\]', 'Connection successful.*\[LE\]>'])
+            retry -= 1

@@ -1,6 +1,12 @@
+from termcolor import colored
+
 import pexpect
 import pygatt
+import os
 import re
+
+
+os.system('color')
 
 class Bot(object):
     """Switchbot class to control the bot."""
@@ -18,16 +24,9 @@ class Bot(object):
         self.device = None
         self.password = None
         self.notification_activated = False
-        print(f"Successfully created {self.name} at {self.mac} with Id {self.bot_id}")
+        print(colored(f"Successfully created {self.name} at {self.mac} with Id {self.bot_id}", "green"))
 
-    def trigger(device):
-        [mac, dev_type, act] = device
-        
-        con = pexpect.spawn('gatttool -b ' + mac + ' -t random -I')
-        con.expect('\[LE\]>')
-        print('Preparing to connect.')
-
-    def press(self):
+    def connect(self):
         con = pexpect.spawn('gatttool -b ' + self.mac + ' -t random -I')
         print('Preparing to connect.')
         retry = 3

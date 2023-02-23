@@ -18,7 +18,7 @@ class Bot(object):
         self.device = None
         self.password = None
         self.notification_activated = False
-        raise print(f"Successfully created {self.name} at {self.mac} with ID {self.bot_id}")
+        print(f"Successfully created {self.name} at {self.mac} with ID {self.bot_id}")
 
     def trigger(device):
         [mac, dev_type, act] = device

@@ -1,4 +1,4 @@
-from termcolor import colored
+from termcolor import colored, cprint
 
 import pexpect
 import pygatt
@@ -21,7 +21,8 @@ class Bot(object):
         self.device = None
         self.password = None
         self.notification_activated = False
-        print(colored("Succesfully connected to ", "green"), colored(f"{self.name}", "on_cyan"))
+        cprint("Succesfully connected to ", "green")
+        cprint(f"{self.name}", "on_cyan")
 
     def connect(self):
         con = pexpect.spawn('gatttool -b ' + self.mac + ' -t random -I')

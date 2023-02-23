@@ -19,9 +19,14 @@ class Bot(object):
         self.password = None
         self.notification_activated = False
 
+        raise ValueError("Mac: ", self.mac)
+
     def trigger(device):
         [mac, dev_type, act] = device
-        raise ValueError("Mac: ", mac)
+        raise ValueError("Mac: ", self.mac)
         con = pexpect.spawn('gatttool -b ' + mac + ' -t random -I')
         con.expect('\[LE\]>')
         print('Preparing to connect.')
+
+    def press(self):
+        _trigger

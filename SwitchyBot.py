@@ -31,7 +31,7 @@ class Bot(object):
         cprint(f"Succesfully created {self.name} at {self.mac} with id {self.bot_id}", "cyan")
 
 
-    def connect(self, cmd_code: str):
+    def connect(self, cmd_code):
         connect = pexpect.spawn('hciconfig')
 
         pnum = connect.expect(["hci0", pexpect.EOF, pexpect.TIMEOUT])
@@ -42,7 +42,7 @@ class Bot(object):
 
         con = pexpect.spawn('gatttool -b ' + self.mac + ' -t random -I')
         con.expect('\[LE\]>')
-        print('Preparing to connect')
+        print(f'Preparing to connect using {cmd_code}')
         retry = 3
         index = 0
         while retry > 0 and 0 == index:
@@ -64,10 +64,10 @@ class Bot(object):
 
 
     def switch(self, state: bool):
-        if state:
-            self.connect("570101")
-        else:
-            self.connect("570102")
+        #if state:
+            #self.connect("570101")
+        #else:
+            #self.connect("570102")
 
         try:
             self.adapter.start()

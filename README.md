@@ -10,7 +10,7 @@ https://github.com/OpenWonderLabs/python-host <br/>
 
 Switchbotpy <br/>
 Made by: nicolas-kuechler <br/>
-https://github.com/RoButton/switchbotpy/tree/41d4293bc5d8573f5419f6b305b1fff0f374ddd0 <br/>
+https://github.com/RoButton/switchbotpy <br/>
 
 ## USAGE
 Firstly you have to create a Bot instance to control, you can create one by running this command <br/>

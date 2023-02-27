@@ -134,5 +134,5 @@ class Bot(object):
             cprint(f"Failed to send {cmd} to {self.name} at {self.mac}", "red")
             cprint("If action was succesfull ignore this message", "yellow")
 
-        cprint(f"Succesfully sent {cmd} to {self.name} using handle {handle}")
+        cprint(f"Succesfully sent {cmd} to {self.name} using handle {handle}", "cyan")
         return

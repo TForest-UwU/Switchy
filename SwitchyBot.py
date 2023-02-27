@@ -68,7 +68,32 @@ class Bot(object):
             self._connect()
             self._activate_notifications()
 
-            cmd = b'\x57\x01' # Command for no password
+            if self.password:
+                cmd = b'\x57\x11' + self.password
+            else:
+                cmd = b'\x57\x01'
+            
+            self.write(handle=0x16, cmd=cmd)
+
+        finally:
+            self.adapter.stop()
+
+    def switch(self, state: bool):
+        try:
+            self.adapter.start()
+            self._connect()
+            self._activate_notifications()
+
+            if self.password:
+                cmd = b'\x57\x11' + self.password
+            else:
+                cmd = b'\x57\x01'
+            
+            if state:
+                cmd += b'\x01'
+            else:
+                cmd += b'\x02'
+                
             self.write(handle=0x16, cmd=cmd)
 
         finally:

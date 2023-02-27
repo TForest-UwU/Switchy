@@ -1,9 +1,7 @@
 from termcolor import cprint
-from enum import Enum
 
 import pexpect
 import pygatt
-import queue
 import re
 
 
@@ -42,6 +40,7 @@ class Bot(object):
                 cprint("Connection error", "red")
                 return
             cprint(f"Connected to {self.name} at {self.mac}", "cyan")
+        self.device = self.adapter.connect(self.mac, address_type = pygatt.BLEAddressType.random)
 
     def press(self):
         try:
@@ -54,15 +53,6 @@ class Bot(object):
 
         finally:
             self.adapter.stop()
-
-
-    def _connect(self):
-        print("Attempting reconnection")
-        try:
-            self.device = self.adapter.connect(self.mac, address_type = pygatt.BLEAddressType.random)
-            cprint(f"Succesfully reconnected to {self.name} at {self.mac}", "cyan")
-        except pygatt.BLEError:
-            raise ConnectionError(f"Failed to connect to {self.name} at {self.mac}")
 
 
     def write(self, handle, cmd, timeout = 5):

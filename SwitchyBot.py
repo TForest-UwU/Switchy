@@ -62,6 +62,7 @@ class Bot(object):
 
         con.sendline('char-write-cmd ' + cmd_handle + ' 570100')
 
+
     def press(self):
         try:
             self.adapter.start()
@@ -73,53 +74,6 @@ class Bot(object):
             else:
                 cmd = b'\x57\x01'
             
-            self.write(handle=0x16, cmd=cmd)
-
-        finally:
-            self.adapter.stop()
-
-    def switch(self, state: bool):
-        try:
-            self.adapter.start()
-            self._connect()
-            self._activate_notifications()
-
-            if self.password:
-                cmd = b'\x57\x11' + self.password
-            else:
-                cmd = b'\x57\x01'
-            
-            if state:
-                cmd += b'\x01'
-            else:
-                cmd += b'\x02'
-
-            self.write(handle=0x16, cmd=cmd)
-
-        finally:
-            self.adapter.stop()
-    
-    def setmode(self, dual_state: bool, inverse: bool):
-        try:
-            self.adapter.start()
-            self._connect()
-            self._activate_notifications()
-
-            if self.password:
-                cmd_base = b'\x57\x13' + self.password
-            else:
-                cmd_base = b'\x57\x03'
-
-            cmd = cmd_base + b'\x64'
-
-            config = 0
-            if dual_state:
-                config += 16
-            if inverse:
-                config += 1
-
-            cmd += config.to_bytes(1, byteorder='big')
-
             self.write(handle=0x16, cmd=cmd)
 
         finally:

@@ -60,7 +60,7 @@ class Bot(object):
         con.expect(['\[CON\]', 'cba20002-224d-11e6-9fb8-0002a5d5c51b'])
         cmd_handle = con.before.decode('utf-8').split('\n')[-1].split()[2].strip(',')
 
-        con.sendline('char-write-cmd ' + cmd_handle + ' 570101') # If it connects using the press command it can only press 570100
+        con.sendline('char-write-cmd ' + cmd_handle + ' 570100') # If it connects using the press command it can only press 570100
 
 
     def press(self):

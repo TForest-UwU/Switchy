@@ -45,11 +45,10 @@ class Bot(object):
     def press(self):
         try:
             self.adapter.start()
-            self._connect()
+            self.connect()
 
             cmd = b'\x57\x01' # Command for no password
             value = self.write(handle=0x16, cmd=cmd)
-            self.handle_notify(value=value)
 
         finally:
             self.adapter.stop()

@@ -18,8 +18,11 @@ Firstly you have to create a Bot instance to control, you can create one by runn
 For example <br />
 `Bot1 = Bot(bot_id = 1, mac = "A1:B2:C3:D4:E5:F6", name = "LightBot1")` <br/>
 
-When we have the Bot instance we need to call a function, currently the only function is press() <br/>
+When we have the Bot instance we need to call a function <br/>
 `[Name of instance].press()` or `Bot1.press()` <br/>
+
+We can also call the switch() function if we have a bot in dual state mode, however currently it can only turn on not off <br/>
+`[Name of instance].switch(state)` or `Bot1.switch(True)` <br/>
 
 ## SPECIALS
 Should you have the need to write a custom command to the bot you can use write() for it <br/>

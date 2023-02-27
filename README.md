@@ -29,7 +29,7 @@ Should you have the need to write a custom command to the bot you can use write(
 `[Name of instance].write(handle, cmd)` for press this would be `Bot1.write(0x16, b'\x57\x01')` <br/>
 
 ## EXAMPLES
-This is an example where you input a your variables and it activates the bot
+This is an example where you input your variables and it activates the bot
 ```
 from SwitchyBot import Bot
 

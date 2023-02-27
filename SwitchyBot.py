@@ -60,7 +60,33 @@ class Bot(object):
         con.expect(['\[CON\]', 'cba20002-224d-11e6-9fb8-0002a5d5c51b'])
         cmd_handle = con.before.decode('utf-8').split('\n')[-1].split()[2].strip(',')
 
-        con.sendline('char-write-cmd ' + cmd_handle + ' 570100') # If it connects using the press command it can only press 570100
+        con.sendline('char-write-cmd ' + cmd_handle + ' 570101')
+
+
+    def switch(self, switch_on: bool):
+        """Switch the state of the Switchbot in the dual state mode:
+            (Extend arm or Retract arm)
+        """
+
+        try:
+            self.adapter.start()
+            self._connect()
+            self._activate_notifications()
+
+            if self.password:
+                cmd = b'\x57\x11' + self.password
+            else:
+                cmd = b'\x57\x01'
+
+            if switch_on:
+                cmd += b'\x01'
+            else: # off
+                cmd += b'\x02'
+
+            self._write_cmd_and_wait_for_notification(handle=0x16, cmd=cmd)
+
+        finally:
+            self.adapter.stop()
 
 
     def press(self):
@@ -79,6 +105,8 @@ class Bot(object):
         finally:
             self.adapter.stop()
 
+
+    
 
     def _connect(self):
         self.device = self.adapter.connect(self.mac, address_type=pygatt.BLEAddressType.random)

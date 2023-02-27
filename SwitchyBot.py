@@ -99,4 +99,4 @@ class Bot(object):
             #cprint(f"Failed to send {cmd} to {self.name} at {self.mac}", "red")
             #cprint("If action was succesfull ignore this message", "orange")
 
-        return
+        #return

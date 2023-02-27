@@ -42,19 +42,21 @@ class Bot(object):
             cprint(f"Connected to {self.name} at {self.mac}", "cyan")
         #self.device = self.adapter.connect(self.mac, address_type = pygatt.BLEAddressType.random)
 
+    def _connect(self):
+        self.device = self.adapter.connect(self.mac, address_type=pygatt.BLEAddressType.random)
+
     def press(self):
         try:
             self.adapter.start()
-            self.connect()
 
             cmd = b'\x57\x01' # Command for no password
-            value = self.write(handle=0x16, cmd=cmd)
+            self.write(handle=0x16, cmd=cmd)
 
         finally:
             self.adapter.stop()
 
 
-    def write(self, handle, cmd, timeout = 5):
+    def write(self, handle, cmd):
         print("Attempting to send command")
         try:
             self.device.char_write_handle(handle = handle, value = cmd)

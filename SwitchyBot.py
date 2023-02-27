@@ -9,14 +9,10 @@ import re
 notification_queue = queue.Queue()
 
 def handle_notification(handle: int, value: bytes):
-    """
-    handle: integer, characteristic read handle the data was received on
-    value: bytearray, the data returned in the notification
-    """
     notification_queue.put((handle, value))
 
 class Bot(object):
-    "Switchbot class to control the bot."
+    "Switchbot class to control the bot"
 
     def __init__(self, bot_id: int, mac: str, name: str):
 
@@ -31,11 +27,13 @@ class Bot(object):
         self.device = None
         self.password = None
         self.notification_activated = False
+
         cprint(f"Succesfully created {self.name} at {self.mac} with id {self.bot_id}", "cyan")
 
 
     def connect(self):
         connect = pexpect.spawn('hciconfig')
+        
         pnum = connect.expect(["hci0", pexpect.EOF, pexpect.TIMEOUT])
         if pnum != 0:
             print('No bluetooth hardware, exit now')
@@ -99,6 +97,6 @@ class Bot(object):
  
         except pygatt.BLEError:
             cprint(f"Failed to send {cmd} to {self.name} at {self.mac}", "red")
-            cprint("If action was succesfull ignore this message", "yellow")
+            cprint("If action was succesfull ignore this message", "orange")
 
         return

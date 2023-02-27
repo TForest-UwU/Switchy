@@ -51,7 +51,7 @@ It did not fail, it just thinks it did <br/>
 When trying to run the script you get a ModuleNotFoundError <br/>
 `ModuleNotFoundError: No module named 'SwitchyBot'` <br/>
 
-To fix this import sys and use sys.path.append <br/>
+To fix this import sys and use sys.path.append or put the script in the same directory as the repository <br/>
 ```
 import sys
 sys.path.append([Your path to SwitchyBot.py])

@@ -124,14 +124,9 @@ class Bot(object):
 
 
     def write(self, handle, cmd):
-        print("Attempting to send command")
-        try:
-            self.device.char_write_handle(handle = handle, value = cmd)
+        print("Attempting to send command")      
+        self.device.char_write_handle(handle = handle, value = cmd)
 
-            cprint(f"Succesfully sent {cmd} to {self.name} using handle {handle}") # Does not print for some reason
- 
-        except pygatt.BLEError:
-            cprint(f"Failed to send {cmd} to {self.name} at {self.mac}", "red")
-            cprint("If action was succesfull ignore this message", "yellow")
+        cprint(f"Succesfully sent {cmd} to {self.name} using handle {handle}")
 
         return

@@ -10,7 +10,7 @@ https://github.com/OpenWonderLabs/python-host <br/>
 
 Switchbotpy <br/>
 Made by: nicolas-kuechler <br/>
-https://github.com/RoButton/switchbotpy/tree/41d4293bc5d8573f5419f6b305b1fff0f374ddd0 <br/>
+https://github.com/RoButton/switchbotpy <br/>
 
 ## USAGE
 Firstly you have to create a Bot instance to control, you can create one by running this command <br/>
@@ -29,7 +29,7 @@ Should you have the need to write a custom command to the bot you can use write(
 `[Name of instance].write(handle, cmd)` for press this would be `Bot1.write(0x16, b'\x57\x01')` <br/>
 
 ## EXAMPLES
-This is an example where you input a MAC adress and it activates the bot
+This is an example where you input your variables and it activates the bot
 ```
 from SwitchyBot import Bot
 
@@ -51,7 +51,7 @@ It did not fail, it just thinks it did <br/>
 When trying to run the script you get a ModuleNotFoundError <br/>
 `ModuleNotFoundError: No module named 'SwitchyBot'` <br/>
 
-To fix this import sys and use sys.path.append <br/>
+To fix this import sys and use sys.path.append or put the script in the same directory as the repository <br/>
 ```
 import sys
 sys.path.append([Your path to SwitchyBot.py])

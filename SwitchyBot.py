@@ -1,5 +1,6 @@
 from termcolor import cprint
 
+import binascii
 import pexpect
 import pygatt
 import queue
@@ -100,3 +101,46 @@ class Bot(object):
             cprint("If action was succesfull ignore this message", "orange")
 
         return
+    
+class Scanner(object):
+    def Scan(self):
+        service_uuid = 'cba20d00-224d-11e6-9fb8-0002a5d5c51b'
+        company_id = '6909'  # actually 0x0969
+        
+        param_list = []
+        dev_list = []
+        bot_list = []
+
+        self.con = pexpect.spawn('hciconfig')
+        pnum = self.con.expect(['hci0', pexpect.EOF, pexpect.TIMEOUT])
+        if pnum == 0:
+            self.con = pexpect.spawn('hcitool lescan')
+
+            scanner = Scanner().withDelegate(Scanner())
+            devices = scanner.scan(10.0)
+            cprint("Scanning...", "cyan")
+
+        else:
+            raise ConnectionError("No bluetooth connection")
+        
+        for dev in devices:
+            mac = 0
+            param_list[:] = []
+            for (adtype, desc, value) in dev.getScanData():
+                if desc == "Local name":
+                    if value == "WoHand":
+                        mac = dev.addr
+                        dev_type = b'H'
+
+            if mac != 0:
+                dev_list.append([mac, dev_type, copy.deepcopy(param_list)])
+
+        for (mac, dev_type, params) in dev_list:
+            if dev_type == b'H':
+                if int(binascii.b2a_hex(params[0]), 16) > 127:
+                    bot_list.append([mac, 'Bot', 'Turn On'])
+                    bot_list.append([mac, 'Bot', 'Turn Off'])
+                    bot_list.append([mac, 'Bot', 'Up'])
+                    bot_list.append([mac, 'Bot', 'Down'])
+                else:
+                    bot_list.append([mac, 'Bot', 'Press'])

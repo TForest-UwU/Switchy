@@ -98,6 +98,32 @@ class Bot(object):
 
         finally:
             self.adapter.stop()
+    
+    def setmode(self, dual_state: bool, inverse: bool):
+        try:
+            self.adapter.start()
+            self._connect()
+            self._activate_notifications()
+
+            if self.password:
+                cmd_base = b'\x57\x13' + self.password
+            else:
+                cmd_base = b'\x57\x03'
+
+            cmd = cmd_base + b'\x64'
+
+            config = 0
+            if dual_state:
+                config += 16
+            if inverse:
+                config += 1
+
+            cmd += config.to_bytes(1, byteorder='big')
+
+            self._write_cmd_and_wait_for_notification(handle=0x16, cmd=cmd)
+
+        finally:
+            self.adapter.stop()
 
 
     def _connect(self):

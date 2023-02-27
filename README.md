@@ -26,7 +26,7 @@ When we have connected the Bot instance we need to call a function, currently th
 
 ## SPECIALS
 Should you have the need to write a custom command to the bot you can use write() for it <br/>
-`[Name of instance].write(handle, cmd)` for press this would be `Bot1.write(0x16, 570100)` <br/>
+`[Name of instance].write(handle, cmd)` for press this would be `Bot1.write(0x16, b'\x57\x01')` <br/>
 
 ## EXAMPLES
 This is an example where you input a MAC adress and it activates the bot

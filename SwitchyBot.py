@@ -85,14 +85,14 @@ class Bot(object):
             self._activate_notifications()
 
             if self.password:
-                cmd = b'\x57\x1' + self.password
+                cmd = b'\x57\x11' + self.password
             else:
-                cmd = b'\x57\x0'
+                cmd = b'\x57\x01'
             
             if state:
-                cmd += b'1'
+                cmd += b'\x01'
             else:
-                cmd += b'2'
+                cmd += b'\x02'
 
             self.write(handle=0x16, cmd=cmd)
 

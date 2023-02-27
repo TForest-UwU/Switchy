@@ -101,7 +101,7 @@ class Bot(object):
 
             if "1" in state:
                 cmd += b'\x01'
-            if "0" in state:
+            else:
                 cmd += b'\x02'
 
             self.write(handle=0x16, cmd=cmd)

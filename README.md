@@ -1,5 +1,5 @@
 # Switchy - Python API to control switchbots
-This project makes it easy to connect to the switchbot services by combining 2 API's that for me only seemed to work together, yet not alone
+This project makes it easier to connect to the switchbot services by combining 2 API's that for me only seemed to work together, yet not alone
 
 ## DISCLAIMER
 I did not fully make this myself, i heavily relied on these 2 existing programs to write this
@@ -50,7 +50,7 @@ After running a succesfull script you will get a warning that states <br/>
 
 It did not fail, it just thinks it did <br/>
 
-When trying to run the script you get a modulenotfounderror <br/>
+When trying to run the script you get a ModuleNotFoundError <br/>
 `ModuleNotFoundError: No module named 'SwitchyBot'` <br/>
 
 To fix this import sys and use sys.path.append <br/>

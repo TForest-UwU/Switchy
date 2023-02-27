@@ -3,6 +3,7 @@ from termcolor import cprint
 import pexpect
 import pygatt
 import queue
+import sys
 import re
 
 notification_queue = queue.Queue()
@@ -33,7 +34,7 @@ class Bot(object):
         cprint(f"Succesfully created {self.name} at {self.mac} with id {self.bot_id}", "cyan")
 
 
-    def connect(self):
+    def connect(self): # Needs to be fixed, it connects however it needs to send a command aswell see python-host switchbot_py2topy3.py
         con = pexpect.spawn('gatttool -b ' + self.mac + ' -t random -I')
         con.expect('\[LE\]>')
         print('Preparing to connect')
@@ -49,8 +50,37 @@ class Bot(object):
                 cprint("Connection error", "red")
                 return
             cprint(f"Connected to {self.name} at {self.mac}", "cyan")
-        #self.device = self.adapter.connect(self.mac, address_type = pygatt.BLEAddressType.random)
 
+
+    def connect2(self):
+        connect = pexpect.spawn('hciconfig')
+        pnum = connect.expect(["hci0", pexpect.EOF, pexpect.TIMEOUT])
+        if pnum != 0:
+            print('No bluetooth hardware, exit now')
+            sys.exit()
+        connect = pexpect.spawn('hciconfig hci0 up')
+
+        con = pexpect.spawn('gatttool -b ' + self.mac + ' -t random -I')
+        con.expect('\[LE\]>')
+        print('Preparing to connect')
+        retry = 3
+        index = 0
+        while retry > 0 and 0 == index:
+            con.sendline('connect')
+
+            index = con.expect(
+                ['Error', '\[CON\]', 'Connection successful.*\[LE\]>'])
+            retry -= 1
+        if 0 == index:
+                cprint("Connection error", "red")
+                return
+        cprint(f"Connected to {self.name} at {self.mac}", "cyan")
+
+        con.sendline('char-desc')
+        con.expect(['\[CON\]', 'cba20002-224d-11e6-9fb8-0002a5d5c51b'])
+        cmd_handle = con.before.decode('utf-8').split('\n')[-1].split()[2].strip(',')
+
+        con.sendline('char-write-cmd ' + cmd_handle + ' 570100')
 
     def press(self):
         try:

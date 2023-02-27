@@ -31,7 +31,7 @@ class Bot(object):
         cprint(f"Succesfully created {self.name} at {self.mac} with id {self.bot_id}", "cyan")
 
 
-    def connect(self, cmd_code):
+    def connect(self):
         connect = pexpect.spawn('hciconfig')
 
         pnum = connect.expect(["hci0", pexpect.EOF, pexpect.TIMEOUT])
@@ -42,7 +42,7 @@ class Bot(object):
 
         con = pexpect.spawn('gatttool -b ' + self.mac + ' -t random -I')
         con.expect('\[LE\]>')
-        print(f'Preparing to connect using {cmd_code}')
+        print(f'Preparing to connect')
         retry = 3
         index = 0
         while retry > 0 and 0 == index:
@@ -60,39 +60,10 @@ class Bot(object):
         con.expect(['\[CON\]', 'cba20002-224d-11e6-9fb8-0002a5d5c51b'])
         cmd_handle = con.before.decode('utf-8').split('\n')[-1].split()[2].strip(',')
 
-        con.sendline('char-write-cmd ' + cmd_handle + cmd_code)
-
-
-    def switch(self, state: bool):
-        #if state:
-            #self.connect("570101")
-        #else:
-            #self.connect("570102")
-
-        try:
-            self.adapter.start()
-            self._connect()
-            self._activate_notifications()
-
-            if self.password:
-                cmd = b'\x57\x11' + self.password
-            else:
-                cmd = b'\x57\x01'
-
-            if state:
-                cmd += b'\x01'
-            else:
-                cmd += b'\x02'
-
-            self.write(handle=0x16, cmd=cmd)
-
-        finally:
-            self.adapter.stop()
+        con.sendline('char-write-cmd ' + cmd_handle "570100")
 
 
     def press(self):
-        self.connect("570100")
-
         try:
             self.adapter.start()
             self._connect()
@@ -107,8 +78,6 @@ class Bot(object):
 
         finally:
             self.adapter.stop()
-
-
     
 
     def _connect(self):

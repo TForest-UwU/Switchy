@@ -83,7 +83,7 @@ class Bot(object):
             else: # off
                 cmd += b'\x02'
 
-            self._write_cmd_and_wait_for_notification(handle=0x16, cmd=cmd)
+            self.write(handle=0x16, cmd=cmd)
 
         finally:
             self.adapter.stop()

@@ -4,7 +4,7 @@ This project makes it easy to connect to the switchbot services bu combining 2 A
 
 -----DISCLAIMER-----
 
-I did not make this myself i just mashed 2 exisitng programs together to create this, listed the 2 programs below.
+I did not make this myself i just mashed 2 existing programs together to create this, i listed the 2 programs below.
 
 Python-Host
 Made by: OpenWonderLabs

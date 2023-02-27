@@ -56,7 +56,7 @@ class Bot(object):
         try:
             self.adapter.start()
             self._connect()
-            self._activate_notifications()
+            #self._activate_notifications()
 
             cmd = b'\x57\x01' # Command for no password
             self.write(handle=0x16, cmd=cmd)
@@ -76,17 +76,17 @@ class Bot(object):
             self.notification_activated = True
         except pygatt.BLEError:
             raise ConnectionError(message="communication with ble device failed")
-        
+
 
     def write(self, handle, cmd):
         print("Attempting to send command")
         try:
             self.device.char_write_handle(handle = handle, value = cmd)
 
-            _, value = notification_queue.get(timeout=5)
+            #_, value = notification_queue.get(timeout=5)
             cprint(f"Succesfully sent {cmd} to {self.name} using handle {handle}")
  
         except pygatt.BLEError:
             raise ConnectionError(f"Failed to send {cmd} to {self.name} at {self.mac}")
 
-        return value
+        #return value

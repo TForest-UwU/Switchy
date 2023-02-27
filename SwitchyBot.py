@@ -82,10 +82,10 @@ class Bot(object):
             self.adapter.stop()
     
     
-    def switch(self, state: bool):
-        if state:
+    def switch(self, state: str):
+        if "1" in state:
             self.connect("570101")
-        if not state:
+        if "0" in state:
             self.connect("570102")
 
 
@@ -99,9 +99,9 @@ class Bot(object):
             else:
                 cmd = b'\x57\x01'
 
-            if state:
+            if "1" in state:
                 cmd += b'\x01'
-            if not state:
+            if "0" in state:
                 cmd += b'\x02'
 
             self.write(handle=0x16, cmd=cmd)

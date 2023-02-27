@@ -40,11 +40,13 @@ class Bot(object):
 
     def connect(self):
         con = pexpect.spawn('gatttool -b ' + self.mac + ' -t random -I')
+        con.expect('\[LE\]>')
         print('Preparing to connect')
         retry = 3
         index = 0
         while retry > 0 and 0 == index:
             con.sendline('connect')
+
             index = con.expect(
                 ['Error', '\[CON\]', 'Connection successful.*\[LE\]>'])
             retry -= 1
@@ -52,6 +54,10 @@ class Bot(object):
                 cprint("Connection error", "red")
                 return
             cprint(f"Connected to {self.name} at {self.mac}", "cyan")
+
+        cmd_handle = con.before.decode('utf-8').split('\n')[-1].split()[2].strip(',')
+
+        con.sendline('char-write-cmd ' + cmd_handle + ' 570100') #570100 is the press command
 
 
     def press(self):

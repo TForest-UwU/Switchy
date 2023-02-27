@@ -1,10 +1,8 @@
 from termcolor import cprint
 
-import binascii
 import pexpect
 import pygatt
 import queue
-import copy
 import sys
 import re
 

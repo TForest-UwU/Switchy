@@ -83,9 +83,9 @@ class Bot(object):
     
     
     def switch(self, state: bool):
-        if state:
-            self.connect("570102")
-        else:
+        if state is True:
+            self.connect("570101")
+        if state is False:
             self.connect("570102")
 
 
@@ -99,9 +99,9 @@ class Bot(object):
             else:
                 cmd = b'\x57\x01'
 
-            if state:
-                cmd += b'\x02'
-            else:
+            if state is True:
+                cmd += b'\x01'
+            if state is False:
                 cmd += b'\x02'
 
             self.write(handle=0x16, cmd=cmd)

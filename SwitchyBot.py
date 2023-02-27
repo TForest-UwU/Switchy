@@ -82,7 +82,11 @@ class Bot(object):
         print("Attempting to send command")
         try:
             self.device.char_write_handle(handle = handle, value = cmd)
+
+            _, value = notification_queue.get(timeout=5)
             cprint(f"Succesfully sent {cmd} to {self.name} using handle {handle}")
  
         except pygatt.BLEError:
             raise ConnectionError(f"Failed to send {cmd} to {self.name} at {self.mac}")
+
+        return value

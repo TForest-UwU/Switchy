@@ -31,7 +31,7 @@ class Bot(object):
         cprint(f"Succesfully created {self.name} at {self.mac} with id {self.bot_id}", "cyan")
 
 
-    def connect(self):
+    def connect(self, cmd_code: str):
         connect = pexpect.spawn('hciconfig')
 
         pnum = connect.expect(["hci0", pexpect.EOF, pexpect.TIMEOUT])
@@ -60,13 +60,14 @@ class Bot(object):
         con.expect(['\[CON\]', 'cba20002-224d-11e6-9fb8-0002a5d5c51b'])
         cmd_handle = con.before.decode('utf-8').split('\n')[-1].split()[2].strip(',')
 
-        con.sendline('char-write-cmd ' + cmd_handle + ' 570101')
+        con.sendline('char-write-cmd ' + cmd_handle + cmd_code)
 
 
-    def switch(self, switch_on: bool):
-        """Switch the state of the Switchbot in the dual state mode:
-            (Extend arm or Retract arm)
-        """
+    def switch(self, state: bool):
+        if state:
+            self.connect("570101")
+        else:
+            self.connect("570102")
 
         try:
             self.adapter.start()
@@ -78,9 +79,9 @@ class Bot(object):
             else:
                 cmd = b'\x57\x01'
 
-            if switch_on:
+            if state:
                 cmd += b'\x01'
-            else: # off
+            else:
                 cmd += b'\x02'
 
             self.write(handle=0x16, cmd=cmd)
@@ -90,6 +91,8 @@ class Bot(object):
 
 
     def press(self):
+        self.connect("570100")
+
         try:
             self.adapter.start()
             self._connect()

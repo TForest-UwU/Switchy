@@ -6,18 +6,6 @@ import pygatt
 import queue
 import re
 
-handle_queue = queue.Queue
-
-class ActionStatus(Enum):
-    complete = 1
-    device_busy = 3
-    device_unreachable = 11
-    device_encrypted  = 7
-    device_unencrypted = 8
-    wrong_password = 9
-
-    unable_resp = 254
-    unable_connect = 255
 
 class Bot(object):
     "Switchbot class to control the bot."
@@ -55,17 +43,12 @@ class Bot(object):
                 return
             cprint(f"Connected to {self.name} at {self.mac}", "cyan")
 
-        cmd_handle = con.before.decode('utf-8').split('\n')[-1].split()[2].strip(',')
-
-        con.sendline('char-write-cmd ' + cmd_handle + ' 570100') #570100 is the press command
-
-
     def press(self):
         try:
             self.adapter.start()
             self._connect()
 
-            cmd = b'\x57\x01'
+            cmd = b'\x57\x01' # Command for no password
             value = self.write(handle=0x16, cmd=cmd)
             self.handle_notify(value=value)
 
@@ -82,33 +65,11 @@ class Bot(object):
             raise ConnectionError(f"Failed to connect to {self.name} at {self.mac}")
 
 
-    def handle_notify(handle: int, value: bytes):
-        handle_queue.put((handle, value))
-
-
-    def notify(self):
-        uuid = "cba20003-224d-11e6-9fb8-0002a5d5c51b"
-        try:
-            self.device.subscribe(uuid, callback=handle_notify)
-            self.notification_activated = True
-        except pygatt.BLEError:
-            raise ConnectionError("Failed to activate notification")
-
-
     def write(self, handle, cmd, timeout = 5):
         print("Attempting to send command")
         try:
             self.device.char_write_handle(handle = handle, value = cmd)
-            _, value = handle_queue.get(timeout=timeout)
             cprint(f"Succesfully sent {cmd} to {self.name} using handle {handle}")
  
         except pygatt.BLEError:
             raise ConnectionError(f"Failed to send {cmd} to {self.name} at {self.mac}")
-
-    
-    def _handle_switchbot_status_msg(self, value: bytearray):
-        status = value[0]
-        action_status = ActionStatus(status)
-
-        if action_status is not ActionStatus.complete:
-            raise ConnectionError(f"{self.name} failed to execute command")

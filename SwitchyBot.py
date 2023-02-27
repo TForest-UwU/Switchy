@@ -40,7 +40,7 @@ class Bot(object):
                 cprint("Connection error", "red")
                 return
             cprint(f"Connected to {self.name} at {self.mac}", "cyan")
-        self.device = self.adapter.connect(self.mac, address_type = pygatt.BLEAddressType.random)
+        #self.device = self.adapter.connect(self.mac, address_type = pygatt.BLEAddressType.random)
 
     def press(self):
         try:

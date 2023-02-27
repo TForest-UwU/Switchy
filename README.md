@@ -18,10 +18,7 @@ Firstly you have to create a Bot instance to control, you can create one by runn
 For example <br />
 `Bot1 = Bot(bot_id = 1, mac = "A1:B2:C3:D4:E5:F6", name = "LightBot1")` <br/>
 
-After we have our Bot instance we have to connect to it using the connect command <br/>
-`[Name of instance].connect()` or `Bot1.connect()` <br/>
-
-When we have connected the Bot instance we need to call a function, currently the only function is press() <br/>
+When we have the Bot instance we need to call a function, currently the only function is press() <br/>
 `[Name of instance].press()` or `Bot1.press()` <br/>
 
 ## SPECIALS
@@ -38,7 +35,6 @@ ID = input("ID: ")                                # An ID
 Mac = input("Mac adress: ")                       # And the adress
 
 Bot0 = Bot(bot_id = ID, mac = Mac, name = Name)   # Create the bot
-Bot0.connect()                                    # Connect to the bot
 Bot0.press()                                      # And press
 ```
 

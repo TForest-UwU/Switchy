@@ -120,7 +120,7 @@ class Bot(object):
 
             cmd += config.to_bytes(1, byteorder='big')
 
-            self._write_cmd_and_wait_for_notification(handle=0x16, cmd=cmd)
+            self.write(handle=0x16, cmd=cmd)
 
         finally:
             self.adapter.stop()

@@ -2,8 +2,17 @@ from termcolor import cprint
 
 import pexpect
 import pygatt
+import queue
 import re
 
+notification_queue = queue.Queue()
+
+def handle_notification(handle: int, value: bytes):
+    """
+    handle: integer, characteristic read handle the data was received on
+    value: bytearray, the data returned in the notification
+    """
+    notification_queue.put((handle, value))
 
 class Bot(object):
     "Switchbot class to control the bot."
@@ -42,12 +51,12 @@ class Bot(object):
             cprint(f"Connected to {self.name} at {self.mac}", "cyan")
         #self.device = self.adapter.connect(self.mac, address_type = pygatt.BLEAddressType.random)
 
-    def _connect(self):
-        self.device = self.adapter.connect(self.mac, address_type=pygatt.BLEAddressType.random)
 
     def press(self):
         try:
             self.adapter.start()
+            self._connect()
+            self._activate_notifications()
 
             cmd = b'\x57\x01' # Command for no password
             self.write(handle=0x16, cmd=cmd)
@@ -55,6 +64,19 @@ class Bot(object):
         finally:
             self.adapter.stop()
 
+
+    def _connect(self):
+        self.device = self.adapter.connect(self.mac, address_type=pygatt.BLEAddressType.random)
+
+
+    def _activate_notifications(self):
+        uuid = "cba20003-224d-11e6-9fb8-0002a5d5c51b"
+        try:
+            self.device.subscribe(uuid, callback=handle_notification)
+            self.notification_activated = True
+        except pygatt.BLEError:
+            raise ConnectionError(message="communication with ble device failed")
+        
 
     def write(self, handle, cmd):
         print("Attempting to send command")

@@ -34,25 +34,7 @@ class Bot(object):
         cprint(f"Succesfully created {self.name} at {self.mac} with id {self.bot_id}", "cyan")
 
 
-    def connect(self): # Needs to be fixed, it connects however it needs to send a command aswell see python-host switchbot_py2topy3.py
-        con = pexpect.spawn('gatttool -b ' + self.mac + ' -t random -I')
-        con.expect('\[LE\]>')
-        print('Preparing to connect')
-        retry = 3
-        index = 0
-        while retry > 0 and 0 == index:
-            con.sendline('connect')
-
-            index = con.expect(
-                ['Error', '\[CON\]', 'Connection successful.*\[LE\]>'])
-            retry -= 1
-            if 0 == index:
-                cprint("Connection error", "red")
-                return
-            cprint(f"Connected to {self.name} at {self.mac}", "cyan")
-
-
-    def connect2(self):
+    def connect(self):
         connect = pexpect.spawn('hciconfig')
         pnum = connect.expect(["hci0", pexpect.EOF, pexpect.TIMEOUT])
         if pnum != 0:

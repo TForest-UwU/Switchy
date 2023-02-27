@@ -1,4 +1,4 @@
-# -------------------------Switchy------------------------------
+# Switchy - Python API to control switchbots
 This project makes it easy to connect to the switchbot services bu combining 2 API's that for me only seemed to work together, yet not alone.
 
 

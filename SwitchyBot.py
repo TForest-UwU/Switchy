@@ -54,7 +54,7 @@ class Bot(object):
                 ['Error', '\[CON\]', 'Connection successful.*\[LE\]>'])
             retry -= 1
         if 0 == index:
-                cprint("Connection error", "red")
+                print("Connection error")
                 return
         print(f"Connected to {self.name} at {self.mac}")
 

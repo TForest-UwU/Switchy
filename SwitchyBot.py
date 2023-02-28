@@ -1,9 +1,8 @@
-import config
 import queue
 import sys
 import re
 
-sys.path.append("c/usr/lib/python3/dist-packages")
+sys.path.append("/usr/lib/python3/dist-packages")
 import pexpect
 import pygatt
 
@@ -122,11 +121,11 @@ class Bot(object):
             self.device.subscribe(uuid, callback=handle_notification)
             self.notification_activated = True
         except pygatt.BLEError:
-            raise ConnectionError(message="communication with ble device failed")
+            raise ConnectionError(message="Communication with BLE device failed")
 
 
     def write(self, handle, cmd):
-        print("Attempting to send command")
+        print(f"Sending {cmd} using {handle} to {self.name} at {self.adapter}")
         try:
             self.device.char_write_handle(handle = handle, value = cmd)
 
@@ -136,5 +135,4 @@ class Bot(object):
             print(f"Failed to send {cmd} to {self.name} at {self.mac}")
             print("If action was succesfull ignore this message")
 
-        print(f"Succesfully sent {cmd} to {self.name} using handle {handle}")
         return

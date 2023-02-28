@@ -4,8 +4,6 @@ import sys
 import re
 
 sys.path.append("c/usr/lib/python3/dist-packages")
-from termcolor import cprint
-
 import pexpect
 import pygatt
 

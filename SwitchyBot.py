@@ -1,11 +1,11 @@
-from termcolor import cprint
-
 import config
 import queue
 import sys
 import re
 
 sys.path.append(config.ImportPath)
+from termcolor import cprint
+
 import pexpect
 import pygatt
 

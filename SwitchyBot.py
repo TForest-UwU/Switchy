@@ -1,8 +1,14 @@
-import pexpect
-import pygatt
+from termcolor import cprint
+
+import config
 import queue
 import sys
 import re
+
+sys.path.append(config.ImportPath)
+import pexpect
+import pygatt
+
 
 notification_queue = queue.Queue()
 

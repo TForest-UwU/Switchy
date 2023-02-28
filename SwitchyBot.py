@@ -1,5 +1,3 @@
-from termcolor import cprint
-
 import pexpect
 import pygatt
 import queue
@@ -28,7 +26,7 @@ class Bot(object):
         self.password = None
         self.notification_activated = False
 
-        cprint(f"Succesfully created {self.name} at {self.mac} with id {self.bot_id}", "cyan")
+        print(f"Succesfully created {self.name} at {self.mac} with id {self.bot_id}")
 
 
     def connect(self, cmd_code: str):
@@ -54,7 +52,7 @@ class Bot(object):
         if 0 == index:
                 cprint("Connection error", "red")
                 return
-        cprint(f"Connected to {self.name} at {self.mac}", "cyan")
+        print(f"Connected to {self.name} at {self.mac}")
 
         con.sendline('char-desc')
         con.expect(['\[CON\]', 'cba20002-224d-11e6-9fb8-0002a5d5c51b'])
@@ -128,11 +126,11 @@ class Bot(object):
         try:
             self.device.char_write_handle(handle = handle, value = cmd)
 
-            cprint(f"Succesfully sent {cmd} to {self.name} using handle {handle}")
+            print(f"Succesfully sent {cmd} to {self.name} using handle {handle}")
  
         except pygatt.BLEError:
-            cprint(f"Failed to send {cmd} to {self.name} at {self.mac}", "red")
-            cprint("If action was succesfull ignore this message", "yellow")
+            print(f"Failed to send {cmd} to {self.name} at {self.mac}")
+            print("If action was succesfull ignore this message")
 
-        cprint(f"Succesfully sent {cmd} to {self.name} using handle {handle}", "cyan")
+        print(f"Succesfully sent {cmd} to {self.name} using handle {handle}")
         return

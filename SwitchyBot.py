@@ -3,7 +3,7 @@ import queue
 import sys
 import re
 
-sys.path.append(config.ImportPath)
+sys.path.append("c/usr/lib/python3/dist-packages")
 from termcolor import cprint
 
 import pexpect

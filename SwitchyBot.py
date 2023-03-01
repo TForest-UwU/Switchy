@@ -130,6 +130,7 @@ class Bot(object):
             self.device.char_write_handle(handle = handle, value = cmd)
 
             print(f"Succesfully sent {cmd} to {self.name} using handle {handle}")
+            #random comment for testing
  
         except pygatt.BLEError:
             print(f"Failed to send {cmd} to {self.name} at {self.mac}")

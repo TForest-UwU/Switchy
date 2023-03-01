@@ -18,9 +18,13 @@ notification_queue = queue.Queue()
 def handle_notification(handle: int, value: bytes):
     notification_queue.put((handle, value))
 
-def restartblue():
-    os.system(config.terminalcmd + " " + config.resetcmd)
-    os.system(config.terminalcmd + " " + config.rfkillcmd)
+class SysCmd():
+    "Class for system commands"
+
+    def restartblue():
+        os.system(config.terminalcmd + " " + config.resetcmd)
+        os.system(config.terminalcmd + " " + config.rfkillcmd)
+
 
 class Bot(object):
     "Switchbot class to control the bot"

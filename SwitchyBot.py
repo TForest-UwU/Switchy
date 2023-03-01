@@ -1,8 +1,13 @@
+# SwitchyBot API for switchbots using BLE
+# Made by Forest for STIGHO Elektrotechniek
+# https://github.com/TForest-UwU/Switchy
+
+import config
 import queue
 import sys
 import re
 
-sys.path.append("/usr/lib/python3/dist-packages")
+sys.path.append(config.packagepath)
 import pexpect
 import pygatt
 
@@ -44,7 +49,7 @@ class Bot(object):
         con = pexpect.spawn('gatttool -b ' + self.mac + ' -t random -I')
         con.expect('\[LE\]>')
         print(f'Preparing to connect using {cmd_code}')
-        retry = 3
+        retry = config.tryconnect
         index = 0
         while retry > 0 and 0 == index:
             con.sendline('connect')
@@ -58,14 +63,14 @@ class Bot(object):
         print(f"Connected to {self.name} at {self.mac}")
 
         con.sendline('char-desc')
-        con.expect(['\[CON\]', 'cba20002-224d-11e6-9fb8-0002a5d5c51b'])
+        con.expect(['\[CON\]', config.botuuid])
         cmd_handle = con.before.decode('utf-8').split('\n')[-1].split()[2].strip(',')
 
         con.sendline('char-write-cmd ' + cmd_handle + ' ' + cmd_code)
 
 
     def press(self):
-        self.connect('570100')
+        self.connect(config.presscode)
 
         try:
             self.adapter.start()
@@ -85,9 +90,9 @@ class Bot(object):
     
     def switch(self, state: str):
         if "1" in state:
-            self.connect("570101")
+            self.connect(config.oncode)
         if "0" in state:
-            self.connect("570102")
+            self.connect(config.offcode)
 
 
         try:
@@ -116,7 +121,7 @@ class Bot(object):
 
 
     def _activate_notifications(self):
-        uuid = "cba20003-224d-11e6-9fb8-0002a5d5c51b"
+        uuid = config.notifuuid
         try:
             self.device.subscribe(uuid, callback=handle_notification)
             self.notification_activated = True

@@ -16,7 +16,7 @@ https://github.com/RoButton/switchbotpy <br/>
 Firstly import Bot from SwitchyBot <br/>
 `from SwitchyBot import Bot` <br/>
 
-then you have to create a Bot instance to control, you can create one by running this command <br/>
+Then you have to create a Bot instance to control, you can create one by running this command <br/>
 `[Name of instance] = Bot(bot_id = [id you want], mac = [mac adress], name = [name of the bot])` <br/>
 For example <br />
 `Bot1 = Bot(bot_id = 1, mac = "A1:B2:C3:D4:E5:F6", name = "LightBot1")` <br/>

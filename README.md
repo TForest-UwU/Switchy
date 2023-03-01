@@ -13,7 +13,10 @@ Made by: nicolas-kuechler <br/>
 https://github.com/RoButton/switchbotpy <br/>
 
 ## USAGE
-Firstly you have to create a Bot instance to control, you can create one by running this command <br/>
+Firstly import Bot from SwitchyBot <br/>
+`from SwitchyBot import Bot` <br/>
+
+then you have to create a Bot instance to control, you can create one by running this command <br/>
 `[Name of instance] = Bot(bot_id = [id you want], mac = [mac adress], name = [name of the bot])` <br/>
 For example <br />
 `Bot1 = Bot(bot_id = 1, mac = "A1:B2:C3:D4:E5:F6", name = "LightBot1")` <br/>
@@ -24,9 +27,12 @@ When we have the Bot instance we can call press() to press the bot, if the bot i
 We can also call the switch() function if we have a bot in dual state mode, state is 0 for OFF and 1 for ON <br/>
 `[Name of instance].switch(state)` or `Bot1.switch(0)` <br/>
 
-## SPECIALS
-Should you have the need to write a custom command to the bot you can use write() for it <br/>
-`[Name of instance].write(handle, cmd)` for press this would be `Bot1.write(0x16, b'\x57\x01')` <br/>
+## SYSCMD
+This is a class for the system commands, to use them import SysCmd <br/>
+`from SwitchyBot import SysCmd`
+
+If you cant connect to bluetooth run restartblue() to restart bluetooth <br/>
+`SysCmd.restartblue()` <br/>
 
 ## EXAMPLES
 This is an example where you input your variables and it activates the bot

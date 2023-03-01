@@ -29,7 +29,10 @@ We can also call the switch() function if we have a bot in dual state mode, stat
 
 ## SYSCMD
 This is a class for the system commands, to use them import SysCmd <br/>
-`from SwitchyBot import SysCmd`
+`from SwitchyBot import SysCmd` <br/>
+
+To start bluetooth on demand run startblue() <br/>
+`SysCmd.startblue()` <br/>
 
 If you cant connect to bluetooth run restartblue() to restart bluetooth <br/>
 `SysCmd.restartblue()` <br/>

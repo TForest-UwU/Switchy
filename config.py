@@ -13,6 +13,9 @@ terminalcmd =   "lxterminal -e"
 tryconnect  =   3
 
 ##---------------------BLE CONFIG----------------------##
+startcmd    =   "sudo bluetoothctl power on"
+agentcmd    =   "sudo bluetoothctl agent on"
+scancmd     =   "sudo bluetoothctl scan on"
 resetcmd    =   "sudo systemctl restart bluetooth"
 rfkillcmd   =   "rfkill unblock bluetooth"
 

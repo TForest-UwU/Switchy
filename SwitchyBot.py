@@ -18,6 +18,10 @@ notification_queue = queue.Queue()
 def handle_notification(handle: int, value: bytes):
     notification_queue.put((handle, value))
 
+def restartblue():
+    os.system(config.terminalcmd + " " + config.resetcmd)
+    os.system(config.terminalcmd + " " + config.rfkillcmd)
+
 class Bot(object):
     "Switchbot class to control the bot"
 
@@ -36,6 +40,7 @@ class Bot(object):
         self.notification_activated = False
 
         print(f"Succesfully created {self.name} at {self.mac} with id {self.bot_id}")
+
 
     def connect(self, cmd_code: str):
 
@@ -68,10 +73,6 @@ class Bot(object):
         cmd_handle = con.before.decode('utf-8').split('\n')[-1].split()[2].strip(',')
 
         con.sendline('char-write-cmd ' + cmd_handle + ' ' + cmd_code)
-
-    def restartblue():
-        os.system(config.terminalcmd + " " + config.resetcmd)
-        os.system(config.terminalcmd + " " + config.rfkillcmd)
 
 
     def press(self):

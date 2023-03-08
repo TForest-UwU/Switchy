@@ -1,7 +1,7 @@
 ##-----------------------CONFIG------------------------##
 # This is the config file for SwitchyBot.py
-# BLE CONFIG is useless unless you call restartblue()
-# Try not to change BOT CONFIG
+# BLE CONFIG is useless unless you import SysCmd
+# Try not to change BOT CONFIG if not neccesary
 
 
 ##---------------------FILE CONFIG---------------------##

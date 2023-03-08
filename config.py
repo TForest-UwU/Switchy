@@ -14,8 +14,11 @@ tryconnect  =   3
 
 ##---------------------BLE CONFIG----------------------##
 startcmd    =   "sudo bluetoothctl power on"
+stopcmd     =   "sudo bluetoothctl power off"
 agentcmd    =   "sudo bluetoothctl agent on"
+stagentcmd  =   "sudo bluetoothctl agent off"
 scancmd     =   "sudo bluetoothctl scan on"
+stscancmd   =   "sudo bluetoothctl scan off"
 resetcmd    =   "sudo systemctl restart bluetooth"
 rfkillcmd   =   "rfkill unblock bluetooth"
 

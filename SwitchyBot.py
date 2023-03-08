@@ -30,6 +30,11 @@ class SysCmd():
         os.system(config.terminalcmd + " " + config.agentcmd)
         os.system(config.terminalcmd + " " + config.scancmd)
 
+    def stopblue():
+        os.system(config.terminalcmd + " " + config.stscancmd)
+        os.system(config.terminalcmd + " " + config.stagentcmd)
+        os.system(config.terminalcmd + " " + config.stopcmd)
+
 
 class Bot(object):
     "Switchbot class to control the bot"

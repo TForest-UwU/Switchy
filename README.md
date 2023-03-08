@@ -1,6 +1,6 @@
 # Switchy - Python API to control switchbots
-This project makes it easier to connect to the switchbot services by combining 2 API's that for me only seemed to work together, yet not alone
-This project is focused on the raspberry pi, syscmds therefore only work on that unless you change them in the config file
+This project makes it easier to connect to the switchbot services by combining 2 API's that for me only seemed to work together, yet not alone <br/>
+This project is focused on the raspberry pi, syscmds therefore only work on that unless you change them in the config file <br/>
 
 ## DISCLAIMER
 I did not fully make this myself, i heavily relied on these 2 existing programs to write this

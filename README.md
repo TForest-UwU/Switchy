@@ -38,6 +38,9 @@ To start bluetooth on demand run startblue() <br/>
 If you cant connect to bluetooth run restartblue() to restart bluetooth <br/>
 `SysCmd.restartblue()` <br/>
 
+To stop the bluetooth services run stopblue() <br/>
+`SysCmd.stopblue()` <br/>
+
 ## EXAMPLES
 This is an example where you input your variables and it activates the bot
 ```
